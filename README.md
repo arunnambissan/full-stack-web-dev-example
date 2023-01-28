@@ -5,7 +5,9 @@ An example project using Node.js, Express.js, JavaScript, and HTML to build a ve
 ### Backend
 
 Insall Node Js - https://nodejs.org/en/
+
 Download or clone this project in your local machine
+
 Run below lines of code to setup the project
 
 ```
