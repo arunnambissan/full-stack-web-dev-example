@@ -22,5 +22,5 @@ npm install
 Run this to start the backend project
 
 ```
-node .
+npm start
 ```
