@@ -1,27 +1,30 @@
-function convertToDisplayString(items) {
-    const itemsArray = items.map(item => `<li id="${item.id}" onclick="showItemDetails('${item.type}', '${item.id}')">${item.name}</li>`);
-    const displayString = itemsArray.join("");
-    return displayString;
-}
-
 function showItems(type) {
-    fetch(`http://localhost:3000/${type}`).then((response) => {
-        response.json().then(items => {
-            console.log("items", items);
-            const displayString = convertToDisplayString(items);
-            document.getElementById("content").innerHTML = '<ul>' + displayString + '</ul>';
+    let list = ``;
+
+    fetch(`http://localhost:3000/${type}`).then(function (res) {
+        res.json().then(function (items) {
+            for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+                console.log(item.name)
+                list += `<li 
+                onclick="showDetails('${item.type}', '${item.id}')"
+                title="${item.description}">
+                    ${item.name}
+                </li>`;
+            }
+            document.getElementById("item-list").innerHTML = list;
         });
-    });
+    })
 }
 
-function showItemDetails(type, itemId) {
-    fetch(`http://localhost:3000/${type}/${itemId}`).then(function (response) {
-        response.json().then(function (item) {
-            console.log("item", item);
-            if (item.varieties.length === 0)
-                alert("No verieties found.")
+function showDetails(type, id) {
+    fetch(`http://localhost:3000/${type}/${id}`).then(function (res) {
+        res.json().then(function (item) {
+            const varieties = item.varieties.map(variety => variety.name);
+            if (varieties.length === 0)
+                alert("No varieties found")
             else
-                alert(item.varieties.map(variety => variety.name));
-        });
-    });
+                alert(varieties.join(""));
+        })
+    })
 }
